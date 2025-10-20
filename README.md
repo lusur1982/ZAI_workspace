@@ -320,3 +320,7 @@ For support and questions:
 ---
 
 Built with ❤️ for the crypto mining community
+
+## 🔄 GitHub Integration
+
+*Repository is now connected with GitHub storage for automatic backups and version control.*
