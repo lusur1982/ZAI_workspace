@@ -69,7 +69,7 @@ export function Header() {
     if (session?.user?.role === 'ADMIN') {
       return [
         { name: 'Dashboard', href: '/admin' },
-        { name: 'My Profile', href: '/dashboard' }
+        { name: 'My Profile', href: '/dashboard/profile' }
       ]
     } else if (session) {
       return [

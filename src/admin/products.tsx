@@ -140,20 +140,22 @@ const StatusBadges = ({ record }: { record: any }) => {
 }
 
 export const ProductList = () => (
-  <div className="flex">
-    <ProductFilters />
-    <List>
-      <Datagrid rowClick="edit">
-        <ProductImageField source="images" />
-        <TextField source="name" />
-        <TextField source="slug" />
-        <SelectField source="type" choices={productTypeChoices} />
-        <SelectField source="cooling" choices={coolingChoices} />
-        <PriceField source="price" />
-        <StatusBadges />
-        <DateField source="createdAt" />
-        <EditButton />
-      </Datagrid>
-    </List>
-  </div>
+  <ListBase>
+    <div className="flex">
+      <ProductFilters />
+      <List>
+        <Datagrid rowClick="edit">
+          <ProductImageField source="images" />
+          <TextField source="name" />
+          <TextField source="slug" />
+          <SelectField source="type" choices={productTypeChoices} />
+          <SelectField source="cooling" choices={coolingChoices} />
+          <PriceField source="price" />
+          <StatusBadges />
+          <DateField source="createdAt" />
+          <EditButton />
+        </Datagrid>
+      </List>
+    </div>
+  </ListBase>
 )
