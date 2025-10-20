@@ -1,5 +1,5 @@
 # CM Crypto Miners - E-commerce Platform
-
+NEEEW 
 A comprehensive e-commerce platform for selling cryptocurrency mining hardware, built with Next.js 15, TypeScript, and modern web technologies.
 
 ## 🚀 Features
