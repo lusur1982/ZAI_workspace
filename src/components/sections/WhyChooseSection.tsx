@@ -1,6 +1,30 @@
+'use client'
+
 import { CheckCircle, Headphones, Truck, Shield, Award, Users } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 export function WhyChooseSection() {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    const element = document.getElementById('why-choose-section')
+    if (element) {
+      observer.observe(element)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   const features = [
     {
       icon: CheckCircle,
@@ -35,7 +59,7 @@ export function WhyChooseSection() {
   ]
 
   return (
-    <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
+    <section id="why-choose-section" className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold mb-4">Why Choose CM?</h2>
@@ -44,9 +68,15 @@ export function WhyChooseSection() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-all duration-700 ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}>
           {features.map((feature, index) => (
-            <div key={index} className="text-center group">
+            <div 
+              key={index} 
+              className="text-center group transition-all duration-500 delay-100"
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
               <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-700 transition-colors">
                 <feature.icon className="w-8 h-8 text-white" />
               </div>
@@ -56,7 +86,9 @@ export function WhyChooseSection() {
           ))}
         </div>
         
-        <div className="mt-16 text-center">
+        <div className={`mt-16 text-center transition-all duration-700 delay-300 ${
+          isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+        }`}>
           <div className="bg-white rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
             <h3 className="text-2xl font-bold mb-4">Ready to Start Mining?</h3>
             <p className="text-gray-600 mb-6">

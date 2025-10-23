@@ -1,9 +1,40 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
+// Simple memory cache
+const cache = new Map<string, { data: any; timestamp: number }>()
+const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
+
+function getCacheKey(searchParams: URLSearchParams): string {
+  return searchParams.toString()
+}
+
+function getFromCache(key: string): any | null {
+  const cached = cache.get(key)
+  if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+    return cached.data
+  }
+  if (cached) {
+    cache.delete(key)
+  }
+  return null
+}
+
+function setCache(key: string, data: any): void {
+  cache.set(key, { data, timestamp: Date.now() })
+}
+
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
+    const cacheKey = getCacheKey(searchParams)
+    
+    // Check cache first
+    const cachedData = getFromCache(cacheKey)
+    if (cachedData) {
+      return NextResponse.json(cachedData)
+    }
+
     const featured = searchParams.get('featured')
     const isNew = searchParams.get('new')
     const type = searchParams.get('type')
@@ -43,82 +74,22 @@ export async function GET(request: NextRequest) {
       take: limit ? parseInt(limit) : undefined
     })
 
-    // Parse images JSON for each product
+    // Batch parse images JSON for better performance
     const productsWithParsedImages = products.map(product => ({
       ...product,
-      images: JSON.parse(product.images || '[]')
+      images: product.images ? JSON.parse(product.images) : []
     }))
 
-    return NextResponse.json({ products: productsWithParsedImages })
+    const responseData = { products: productsWithParsedImages }
+    
+    // Cache the response
+    setCache(cacheKey, responseData)
+
+    return NextResponse.json(responseData)
   } catch (error) {
     console.error('Error fetching products:', error)
     return NextResponse.json(
       { error: 'Failed to fetch products' },
-      { status: 500 }
-    )
-  }
-}
-
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    const {
-      name,
-      slug,
-      description,
-      price,
-      type,
-      cooling,
-      images,
-      featured = false,
-      new: isNew = false
-    } = body
-
-    // Validate required fields
-    if (!name || !slug || !description || !price || !type || !cooling) {
-      return NextResponse.json(
-        { error: 'Missing required fields' },
-        { status: 400 }
-      )
-    }
-
-    // Check if slug already exists
-    const existingProduct = await db.product.findUnique({
-      where: { slug }
-    })
-
-    if (existingProduct) {
-      return NextResponse.json(
-        { error: 'Product with this slug already exists' },
-        { status: 400 }
-      )
-    }
-
-    const product = await db.product.create({
-      data: {
-        name,
-        slug,
-        description,
-        price: parseFloat(price),
-        type,
-        cooling,
-        images: JSON.stringify(images || []),
-        featured,
-        new: isNew
-      }
-    })
-
-    // Parse images for response
-    const responseProduct = {
-      ...product,
-      images: JSON.parse(product.images || '[]')
-    }
-
-    return NextResponse.json(responseProduct, { status: 201 })
-  } catch (error) {
-    console.error('Error creating product:', error)
-    return NextResponse.json(
-      { error: 'Failed to create product' },
       { status: 500 }
     )
   }

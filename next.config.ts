@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
         pathname: '/**',
       },
     ],
+    formats: ['image/webp', 'image/avif'],
+    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   webpack: (config, { dev }) => {
     if (dev) {
@@ -26,11 +30,34 @@ const nextConfig: NextConfig = {
         ignored: ['**/*'], // 忽略所有文件变化
       };
     }
+    
+    // Optimize for performance
+    config.optimization = {
+      ...config.optimization,
+      splitChunks: {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      },
+    };
+    
     return config;
   },
   eslint: {
     // 构建时忽略ESLint错误
     ignoreDuringBuilds: true,
+  },
+  // Performance optimizations
+  poweredByHeader: false,
+  compress: true,
+  generateEtags: false,
+  httpAgentOptions: {
+    keepAlive: true,
   },
 };
 
