@@ -85,6 +85,12 @@ model Product {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   
+  // Performance indexes
+  @@index([featured])
+  @@index([new])
+  @@index([type])
+  @@index([createdAt])
+  @@index([featured, new])
   @@map("products")
 }
 
