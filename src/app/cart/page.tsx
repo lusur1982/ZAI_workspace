@@ -5,50 +5,52 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 import { ShoppingCart, Plus, Minus, Trash2, ArrowLeft } from 'lucide-react'
-import { useCartStore } from '@/lib/cart'
-import { toast } from '@/hooks/use-toast'
+
+// Mock cart data for now
+const mockItems = [
+  {
+    id: '1',
+    product: {
+      id: '1',
+      name: 'Antminer S21 Pro',
+      price: 2499,
+      images: ['/images/antminer-s21-pro.jpg'],
+      slug: 'antminer-s21-pro'
+    },
+    quantity: 1
+  }
+]
 
 export default function CartPage() {
-  const { items, updateQuantity, removeItem, clearCart, getTotal } = useCartStore()
+  const [items, setItems] = useState(mockItems)
   const [isUpdating, setIsUpdating] = useState<string | null>(null)
 
   const handleUpdateQuantity = async (productId: string, newQuantity: number) => {
     setIsUpdating(productId)
     try {
-      updateQuantity(productId, newQuantity)
+      // Mock update
+      console.log('Updating quantity:', productId, newQuantity)
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update quantity",
-        variant: "destructive"
-      })
+      console.error('Error updating quantity:', error)
     } finally {
       setIsUpdating(null)
     }
   }
 
   const handleRemoveItem = (productId: string, productName: string) => {
-    removeItem(productId)
-    toast({
-      title: "Item removed",
-      description: `${productName} has been removed from your cart.`,
-    })
+    setItems(items.filter(item => item.product.id !== productId))
+    console.log('Removed item:', productName)
   }
 
   const handleClearCart = () => {
-    clearCart()
-    toast({
-      title: "Cart cleared",
-      description: "All items have been removed from your cart.",
-    })
+    setItems([])
+    console.log('Cart cleared')
   }
 
-  const subtotal = getTotal()
+  const subtotal = items.reduce((total, item) => total + (item.product.price * item.quantity), 0)
   const shipping = subtotal > 0 ? (subtotal > 1000 ? 0 : 50) : 0
-  const tax = subtotal * 0.08 // 8% tax
+  const tax = subtotal * 0.20 // 20% DPH
   const total = subtotal + shipping + tax
 
   if (items.length === 0) {
@@ -57,9 +59,9 @@ export default function CartPage() {
         <div className="max-w-2xl mx-auto text-center">
           <div className="mb-8">
             <ShoppingCart className="w-24 h-24 text-gray-300 mx-auto mb-4" />
-            <h1 className="text-3xl font-bold mb-4">Your cart is empty</h1>
+            <h1 className="text-3xl font-bold mb-4">Váš košík je prázdny</h1>
             <p className="text-gray-600 mb-8">
-              Looks like you haven't added any crypto miners to your cart yet.
+              Zatiaľ ste do košíka nepridali žiadne ťažobné zariadenia.
             </p>
           </div>
           
@@ -67,7 +69,7 @@ export default function CartPage() {
             <Link href="/shop">
               <Button size="lg" className="w-full sm:w-auto">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Continue Shopping
+                Pokračovať v nákupe
               </Button>
             </Link>
           </div>
@@ -79,9 +81,9 @@ export default function CartPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Shopping Cart</h1>
+        <h1 className="text-3xl font-bold mb-4">Nákupný Košík</h1>
         <p className="text-gray-600">
-          Review your selected crypto miners and proceed to checkout
+          Skontrolujte si vybrané ťažobné zariadenia a pokračujte do pokladne
         </p>
       </div>
 
@@ -91,7 +93,7 @@ export default function CartPage() {
           <Card>
             <CardHeader>
               <div className="flex items-center justify-between">
-                <CardTitle>Cart Items ({items.length})</CardTitle>
+                <CardTitle>Položky v košíku ({items.length})</CardTitle>
                 <Button 
                   variant="outline" 
                   size="sm" 
@@ -99,7 +101,7 @@ export default function CartPage() {
                   className="text-red-600 hover:text-red-700"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  Clear Cart
+                  Vyčistiť košík
                 </Button>
               </div>
             </CardHeader>
@@ -134,7 +136,7 @@ export default function CartPage() {
                             {item.product.name}
                           </Link>
                           <p className="text-sm text-gray-500">
-                            ${item.product.price.toLocaleString()} per unit
+                            €{item.product.price.toLocaleString()} za kus
                           </p>
                         </div>
                         <Button
@@ -149,7 +151,7 @@ export default function CartPage() {
 
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-gray-600">Quantity:</span>
+                        <span className="text-sm text-gray-600">Množstvo:</span>
                         <div className="flex items-center border rounded-lg">
                           <Button
                             variant="ghost"
@@ -174,7 +176,7 @@ export default function CartPage() {
                           </Button>
                         </div>
                         <span className="text-sm font-semibold ml-auto">
-                          ${(item.product.price * item.quantity).toLocaleString()}
+                          €{(item.product.price * item.quantity).toLocaleString()}
                         </span>
                       </div>
                     </div>
@@ -189,38 +191,38 @@ export default function CartPage() {
         <div className="lg:col-span-1">
           <Card className="sticky top-4">
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle>Súhrn Objednávky</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Subtotal</span>
-                  <span className="font-medium">${subtotal.toLocaleString()}</span>
+                  <span className="text-gray-600">Medzisúčet</span>
+                  <span className="font-medium">€{subtotal.toLocaleString()}</span>
                 </div>
                 
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Shipping</span>
+                  <span className="text-gray-600">Doprava</span>
                   <span className="font-medium">
-                    {shipping === 0 ? 'FREE' : `$${shipping.toLocaleString()}`}
+                    {shipping === 0 ? 'ZADARMO' : `€${shipping.toLocaleString()}`}
                   </span>
                 </div>
                 
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Tax (8%)</span>
-                  <span className="font-medium">${tax.toFixed(2)}</span>
+                  <span className="text-gray-600">DPH (20%)</span>
+                  <span className="font-medium">€{tax.toFixed(2)}</span>
                 </div>
 
-                <Separator />
+                <div className="border-t pt-4"></div>
 
                 <div className="flex justify-between text-lg font-bold">
-                  <span>Total</span>
-                  <span className="text-blue-600">${total.toFixed(2)}</span>
+                  <span>Celkom</span>
+                  <span className="text-blue-600">€{total.toFixed(2)}</span>
                 </div>
 
                 {shipping === 0 && subtotal > 1000 && (
                   <div className="bg-green-50 border border-green-200 rounded-lg p-3">
                     <p className="text-sm text-green-700">
-                      🎉 Free shipping on orders over $1,000!
+                      🎉 Zadarmo doprava pri objednávkach nad €1,000!
                     </p>
                   </div>
                 )}
@@ -228,14 +230,14 @@ export default function CartPage() {
                 <div className="space-y-2 pt-4">
                   <Link href="/checkout">
                     <Button size="lg" className="w-full">
-                      Proceed to Checkout
+                      Pokračovať do pokladne
                     </Button>
                   </Link>
                   
                   <Link href="/shop">
                     <Button variant="outline" size="lg" className="w-full">
                       <ArrowLeft className="w-4 h-4 mr-2" />
-                      Continue Shopping
+                      Pokračovať v nákupe
                     </Button>
                   </Link>
                 </div>

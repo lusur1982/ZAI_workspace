@@ -7,8 +7,6 @@ import { Badge } from '@/components/ui/badge'
 import { ShoppingCart, Star, Sparkles } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useCartStore } from '@/lib/cart'
-import { toast } from '@/hooks/use-toast'
 
 interface Product {
   id: string
@@ -31,10 +29,16 @@ interface ProductImageProps {
 function ProductImage({ src, alt }: ProductImageProps) {
   const [imageError, setImageError] = useState(false)
 
-  if (imageError || !src) {
+  // Check if src is valid and not empty
+  const isValidSrc = src && src.trim() !== '' && (src.startsWith('/') || src.startsWith('http'))
+
+  if (imageError || !isValidSrc) {
     return (
       <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-        <span className="text-gray-400">No image</span>
+        <div className="text-center p-4">
+          <div className="text-gray-400 text-sm">Product Image</div>
+          <div className="text-gray-300 text-xs mt-1">Not available</div>
+        </div>
       </div>
     )
   }
@@ -52,14 +56,10 @@ function ProductImage({ src, alt }: ProductImageProps) {
 }
 
 function FeaturedProductCard({ product }: { product: Product }) {
-  const { addItem } = useCartStore()
-
   const handleAddToCart = () => {
-    addItem(product)
-    toast({
-      title: "Added to cart!",
-      description: `${product.name} has been added to your cart.`,
-    })
+    // Mock add to cart
+    console.log('Added to cart:', product.name)
+    alert(`${product.name} has been added to your cart.`)
   }
 
   return (
@@ -108,14 +108,10 @@ function FeaturedProductCard({ product }: { product: Product }) {
 }
 
 function NewProductCard({ product }: { product: Product }) {
-  const { addItem } = useCartStore()
-
   const handleAddToCart = () => {
-    addItem(product)
-    toast({
-      title: "Added to cart!",
-      description: `${product.name} has been added to your cart.`,
-    })
+    // Mock add to cart
+    console.log('Added to cart:', product.name)
+    alert(`${product.name} has been added to your cart.`)
   }
 
   return (
@@ -155,25 +151,130 @@ function NewProductCard({ product }: { product: Product }) {
   )
 }
 
-export function OptimizedHomeProducts() {
+type PageVariant = 'ultra' | 'hybrid' | 'standard'
+
+// Static data for ultra-fast variant
+const staticData = {
+  featured: [
+    {
+      id: "1",
+      name: "Bitmain Antminer S19 Pro",
+      slug: "antminer-s19-pro",
+      price: 2499,
+      description: "The most powerful Bitcoin miner with 110 TH/s hashrate and exceptional efficiency.",
+      type: "ASIC",
+      cooling: "Air Cooling",
+      images: [],
+      featured: true,
+      new: false
+    },
+    {
+      id: "2", 
+      name: "MicroBT WhatsMiner M30S++",
+      slug: "whatsminer-m30s-plus",
+      price: 2299,
+      description: "High-performance Bitcoin mining rig with 112 TH/s hashrate and advanced cooling.",
+      type: "ASIC",
+      cooling: "Air Cooling", 
+      images: [],
+      featured: true,
+      new: false
+    },
+    {
+      id: "3",
+      name: "Canaan AvalonMiner 1246",
+      slug: "avalonminer-1246", 
+      price: 1899,
+      description: "Reliable and efficient Bitcoin miner with 90 TH/s hashrate for professional mining.",
+      type: "ASIC",
+      cooling: "Air Cooling",
+      images: [],
+      featured: true,
+      new: false
+    }
+  ],
+  new: [
+    {
+      id: "4",
+      name: "Bitmain Antminer S19 XP",
+      slug: "antminer-s19-xp",
+      price: 3299,
+      description: "Next-generation Bitcoin miner with 140 TH/s hashrate and improved efficiency.",
+      type: "ASIC",
+      cooling: "Air Cooling",
+      images: [],
+      featured: false,
+      new: true
+    },
+    {
+      id: "5",
+      name: "MicroBT WhatsMiner M50S",
+      slug: "whatsminer-m50s",
+      price: 2999,
+      description: "Latest generation miner with 126 TH/s hashrate and optimized power consumption.",
+      type: "ASIC", 
+      cooling: "Air Cooling",
+      images: [],
+      featured: false,
+      new: true
+    },
+    {
+      id: "6",
+      name: "Jasminer X4-1U",
+      slug: "jasminer-x4-1u",
+      price: 1599,
+      description: "Compact and efficient Ethereum miner with high hashrate and low power consumption.",
+      type: "ASIC",
+      cooling: "Air Cooling",
+      images: [],
+      featured: false,
+      new: true
+    },
+    {
+      id: "7",
+      name: "Goldshell KD6",
+      slug: "goldshell-kd6",
+      price: 899,
+      description: "Compact Kadena miner with excellent performance and quiet operation.",
+      type: "ASIC",
+      cooling: "Air Cooling", 
+      images: [],
+      featured: false,
+      new: true
+    }
+  ]
+}
+
+export function OptimizedHomeProducts({ variant = 'hybrid' }: { variant?: PageVariant }) {
   const [data, setData] = useState<{ featured: Product[], new: Product[] } | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Ultra variant: use static data immediately
+    if (variant === 'ultra') {
+      setData(staticData)
+      setLoading(false)
+      return
+    }
+
+    // Hybrid and Standard variants: fetch from API
     const fetchHomeData = async () => {
       try {
-        const response = await fetch('/api/homepage')
+        const endpoint = variant === 'hybrid' ? '/api/homepage-hybrid' : '/api/homepage'
+        const response = await fetch(endpoint)
         const homeData = await response.json()
         setData(homeData)
       } catch (error) {
         console.error('Failed to fetch home data:', error)
+        // Fallback to static data on error
+        setData(staticData)
       } finally {
         setLoading(false)
       }
     }
 
     fetchHomeData()
-  }, [])
+  }, [variant])
 
   if (loading) {
     return (
