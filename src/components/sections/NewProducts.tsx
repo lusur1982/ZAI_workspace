@@ -91,13 +91,13 @@ export function NewProducts() {
 
   if (loading) {
     return (
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">New Arrivals</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">New Arrivals</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[...Array(4)].map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                <div className="bg-gray-100 h-48 rounded-lg mb-4"></div>
                 <div className="h-4 bg-gray-200 rounded mb-2"></div>
                 <div className="h-4 bg-gray-200 rounded w-3/4"></div>
               </div>
@@ -109,11 +109,11 @@ export function NewProducts() {
   }
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2">
-            <Sparkles className="w-8 h-8 text-yellow-500" />
+          <h2 className="text-3xl font-bold mb-4 flex items-center justify-center gap-2 text-gray-900">
+            <Sparkles className="w-8 h-8 text-gray-600" />
             New Arrivals
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -128,40 +128,40 @@ export function NewProducts() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product) => (
-              <Card key={product.id} className="group hover:shadow-lg transition-shadow">
+              <Card key={product.id} className="group hover:shadow-lg transition-shadow border-gray-200 bg-white">
                 <CardHeader className="p-0">
-                  <div className="relative h-48 overflow-hidden rounded-t-lg">
+                  <div className="relative h-48 overflow-hidden rounded-t-lg bg-gray-50">
                     {product.images[0] ? (
                       <ProductImage src={product.images[0]} alt={product.name} />
                     ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+                      <div className="w-full h-full bg-gray-100 flex items-center justify-center">
                         <span className="text-gray-400">No image</span>
                       </div>
                     )}
-                    <Badge className="absolute top-4 left-4 bg-green-500">
+                    <Badge className="absolute top-4 left-4 bg-gray-900 text-white">
                       New
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="p-4">
-                  <CardTitle className="text-lg mb-2 line-clamp-2">{product.name}</CardTitle>
+                  <CardTitle className="text-lg mb-2 line-clamp-2 text-gray-900">{product.name}</CardTitle>
                   <p className="text-gray-600 text-sm mb-3 line-clamp-2">{product.description}</p>
                   <div className="flex flex-wrap gap-1 mb-3">
-                    <Badge variant="secondary" className="text-xs">{product.type}</Badge>
-                    <Badge variant="outline" className="text-xs">{product.cooling}</Badge>
+                    <Badge variant="secondary" className="text-xs bg-gray-100 text-gray-700">{product.type}</Badge>
+                    <Badge variant="outline" className="text-xs border-gray-300 text-gray-600">{product.cooling}</Badge>
                   </div>
-                  <div className="text-xl font-bold text-blue-600">
+                  <div className="text-xl font-bold text-gray-900">
                     ${product.price.toLocaleString()}
                   </div>
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
                   <div className="flex gap-2 w-full">
-                    <Button className="flex-1 text-sm">
+                    <Button className="flex-1 text-sm bg-gray-900 hover:bg-gray-800 text-white">
                       <Link href={`/product/${product.slug}`}>
                         View
                       </Link>
                     </Button>
-                    <Button variant="outline" size="icon" className="h-8 w-8" onClick={() => handleAddToCart(product)}>
+                    <Button variant="outline" size="icon" className="h-8 w-8 border-gray-300 text-gray-700 hover:bg-gray-50" onClick={() => handleAddToCart(product)}>
                       <ShoppingCart className="w-3 h-3" />
                     </Button>
                   </div>

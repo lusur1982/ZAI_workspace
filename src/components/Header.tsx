@@ -98,10 +98,10 @@ export function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center">
+              <div className="h-8 w-8 rounded bg-gray-900 flex items-center justify-center">
                 <span className="text-white font-bold text-sm">CM</span>
               </div>
-              <span className="font-bold text-xl">CM Crypto Miners</span>
+              <span className="font-bold text-xl text-gray-900">CM Crypto Miners</span>
             </Link>
           </div>
 
@@ -111,7 +111,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium transition-colors hover:text-blue-600"
+                className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900"
                 onClick={(e) => {
                   // Fallback navigation if Next.js Link doesn't work
                   if (e.ctrlKey || e.metaKey) {
@@ -135,7 +135,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium transition-colors hover:text-blue-600 bg-blue-50 px-3 py-1 rounded-md"
+                className="text-sm font-medium transition-colors hover:text-gray-900 bg-gray-100 px-3 py-1 rounded-md text-gray-700"
                 onClick={(e) => {
                   if (e.ctrlKey || e.metaKey) {
                     return
@@ -219,7 +219,7 @@ export function Header() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className="text-sm font-medium transition-colors hover:text-blue-600 py-2"
+                        className="text-sm font-medium text-gray-700 transition-colors hover:text-gray-900 py-2"
                         onClick={() => {
                           setIsOpen(false)
                           // Fallback navigation
@@ -239,7 +239,7 @@ export function Header() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className="text-sm font-medium transition-colors hover:text-blue-600 py-2 bg-blue-50 px-3 py-2 rounded-md"
+                        className="text-sm font-medium transition-colors hover:text-gray-900 py-2 bg-gray-100 px-3 py-2 rounded-md text-gray-700"
                         onClick={() => {
                           setIsOpen(false)
                           setTimeout(() => {
