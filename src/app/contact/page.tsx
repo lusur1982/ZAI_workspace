@@ -91,13 +91,13 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-16">
+      <section className="bg-white text-gray-900 py-16 border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Contact CM Crypto Miners
             </h1>
-            <p className="text-xl text-blue-100">
+            <p className="text-xl text-gray-600">
               Get in touch with our team for expert support and guidance
             </p>
           </div>
@@ -259,14 +259,14 @@ export default function ContactPage() {
               </Card>
 
               {/* Live Chat */}
-              <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+              <Card className="bg-gray-50 border-gray-200">
                 <CardContent className="p-6 text-center">
-                  <MessageCircle className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-2">Prefer Live Chat?</h3>
+                  <MessageCircle className="w-12 h-12 text-gray-600 mx-auto mb-4" />
+                  <h3 className="text-xl font-semibold mb-2 text-gray-900">Prefer Live Chat?</h3>
                   <p className="text-gray-600 mb-4">
                     Get instant answers from our support team
                   </p>
-                  <Button className="w-full">
+                  <Button className="w-full bg-gray-900 hover:bg-gray-800 text-white">
                     Start Live Chat
                   </Button>
                 </CardContent>

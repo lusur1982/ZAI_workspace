@@ -138,13 +138,13 @@ export default function FAQPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-16">
+      <section className="bg-white text-gray-900 py-16 border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
               Frequently Asked Questions
             </h1>
-            <p className="text-xl text-blue-100">
+            <p className="text-xl text-gray-600">
               Everything you need to know about crypto mining and our products
             </p>
           </div>

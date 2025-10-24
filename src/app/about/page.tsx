@@ -76,27 +76,27 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-20">
+      <section className="bg-white text-gray-900 py-20 border-b border-gray-200">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-6xl font-bold mb-6">
               About CM Crypto Miners
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-blue-100">
+            <p className="text-xl md:text-2xl mb-8 text-gray-600">
               Your trusted partner in cryptocurrency mining hardware since 2018
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
               <div className="text-center">
-                <div className="text-4xl font-bold mb-2">10,000+</div>
-                <div className="text-blue-100">Happy Customers</div>
+                <div className="text-4xl font-bold mb-2 text-gray-900">10,000+</div>
+                <div className="text-gray-600">Happy Customers</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold mb-2">50+</div>
-                <div className="text-blue-100">Countries Served</div>
+                <div className="text-4xl font-bold mb-2 text-gray-900">50+</div>
+                <div className="text-gray-600">Countries Served</div>
               </div>
               <div className="text-center">
-                <div className="text-4xl font-bold mb-2">99.9%</div>
-                <div className="text-blue-100">Uptime Guarantee</div>
+                <div className="text-4xl font-bold mb-2 text-gray-900">99.9%</div>
+                <div className="text-gray-600">Uptime Guarantee</div>
               </div>
             </div>
           </div>
@@ -195,17 +195,17 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+      <section className="py-20 bg-gray-50 text-gray-900 border-t border-gray-200">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Start Your Mining Journey?</h2>
-          <p className="text-xl mb-8 text-blue-100">
+          <p className="text-xl mb-8 text-gray-600">
             Join thousands of successful miners who trust CM for their hardware needs
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+            <button className="bg-gray-900 text-white px-8 py-3 rounded-lg font-semibold hover:bg-gray-800 transition-colors">
               Browse Products
             </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+            <button className="border-2 border-gray-900 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-gray-900 hover:text-white transition-colors">
               Contact Sales
             </button>
           </div>
