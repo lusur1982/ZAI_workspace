@@ -74,7 +74,7 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-20">
         <div className="container mx-auto px-4">
@@ -104,11 +104,11 @@ export default function AboutPage() {
       </section>
 
       {/* Our Story */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-slate-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Our Story</h2>
-            <div className="prose prose-lg mx-auto text-gray-600">
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">Our Story</h2>
+            <div className="prose prose-lg mx-auto text-gray-300">
               <p className="mb-6">
                 CM Crypto Miners was born from a simple observation: while cryptocurrency was revolutionizing finance, 
                 the hardware needed to participate remained complex, expensive, and inaccessible to many.
@@ -129,22 +129,22 @@ export default function AboutPage() {
       </section>
 
       {/* Timeline */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-slate-900/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Journey</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-white">Our Journey</h2>
           <div className="max-w-4xl mx-auto">
             <div className="relative">
-              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-blue-200"></div>
+              <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-purple-500/30"></div>
               {milestones.map((milestone, index) => (
                 <div key={index} className={`flex items-center mb-8 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
                   <div className="w-1/2 pr-8">
                     <Card className="p-6">
                       <Badge className="mb-2">{milestone.year}</Badge>
                       <h3 className="text-xl font-semibold mb-2">{milestone.title}</h3>
-                      <p className="text-gray-600">{milestone.description}</p>
+                      <p className="text-gray-300">{milestone.description}</p>
                     </Card>
                   </div>
-                  <div className="w-8 h-8 bg-blue-600 rounded-full border-4 border-white relative z-10"></div>
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full border-4 border-slate-900 relative z-10 shadow-lg shadow-purple-500/50"></div>
                   <div className="w-1/2 pl-8"></div>
                 </div>
               ))}
@@ -154,9 +154,9 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-slate-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Meet Our Team</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-white">Meet Our Team</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {team.map((member, index) => (
               <Card key={index} className="text-center">
@@ -166,7 +166,7 @@ export default function AboutPage() {
                   </div>
                   <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
                   <Badge variant="secondary" className="mb-3">{member.role}</Badge>
-                  <p className="text-gray-600 text-sm">{member.description}</p>
+                  <p className="text-gray-300 text-sm">{member.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -175,9 +175,9 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-slate-900/50">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Our Values</h2>
+          <h2 className="text-3xl font-bold text-center mb-12 text-white">Our Values</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {values.map((value, index) => (
               <Card key={index} className="text-center hover:shadow-lg transition-shadow">
@@ -186,7 +186,7 @@ export default function AboutPage() {
                     <value.icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-semibold mb-3">{value.title}</h3>
-                  <p className="text-gray-600">{value.description}</p>
+                  <p className="text-gray-300">{value.description}</p>
                 </CardContent>
               </Card>
             ))}

@@ -91,15 +91,25 @@ export function FeaturedProducts() {
 
   if (loading) {
     return (
-      <section className="py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">Featured Products</h2>
+      <section className="section-padding bg-muted/30">
+        <div className="container-nordcraft">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Products</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Our top-selling crypto miners with the best performance and reliability
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(3)].map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="bg-gray-200 h-64 rounded-lg mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                <div className="card-nordcraft">
+                  <div className="h-64 bg-muted rounded-t-xl mb-4"></div>
+                  <div className="p-6 space-y-3">
+                    <div className="h-4 bg-muted rounded w-3/4"></div>
+                    <div className="h-4 bg-muted rounded w-1/2"></div>
+                    <div className="h-8 bg-muted rounded w-1/3"></div>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -109,77 +119,93 @@ export function FeaturedProducts() {
   }
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Featured Products</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+    <section className="section-padding bg-muted/30">
+      <div className="container-nordcraft">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Featured Products</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Our top-selling crypto miners with the best performance and reliability
           </p>
         </div>
         
         {products.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500">No featured products available at the moment.</p>
+            <p className="text-muted-foreground">No featured products available at the moment.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product) => (
-              <Card key={product.id} className="group hover:shadow-lg transition-shadow">
-                <CardHeader className="p-0">
-                  <div className="relative h-64 overflow-hidden rounded-t-lg">
+              <div key={product.id} className="card-nordcraft group hover:scale-105 transition-all duration-300 overflow-hidden">
+                <div className="relative">
+                  <div className="relative h-64 overflow-hidden rounded-t-xl bg-muted">
                     {product.images[0] ? (
                       <ProductImage src={product.images[0]} alt={product.name} />
                     ) : (
-                      <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-gray-400">No image</span>
+                      <div className="w-full h-full bg-muted flex items-center justify-center">
+                        <span className="text-muted-foreground">No image</span>
                       </div>
                     )}
-                    <Badge className="absolute top-4 left-4 bg-red-500">
+                    <Badge className="absolute top-4 left-4 bg-primary text-primary-foreground">
                       Featured
                     </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <CardTitle className="text-xl mb-2 line-clamp-2">{product.name}</CardTitle>
-                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">{product.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <Badge variant="secondary">{product.type}</Badge>
-                    <Badge variant="outline">{product.cooling}</Badge>
-                  </div>
-                  <div className="flex items-center gap-2 mb-4">
-                    <div className="flex">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                      ))}
+                    <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <Button variant="secondary" size="sm" onClick={() => handleAddToCart(product)}>
+                        <ShoppingCart className="w-4 h-4 mr-2" />
+                        Add to Cart
+                      </Button>
                     </div>
-                    <span className="text-sm text-gray-500">(4.8)</span>
                   </div>
-                  <div className="text-2xl font-bold text-blue-600">
-                    ${product.price.toLocaleString()}
+                </div>
+                
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="text-xl font-semibold line-clamp-2 flex-1 mr-2">{product.name}</h3>
+                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                      <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <span>4.8</span>
+                    </div>
                   </div>
-                </CardContent>
-                <CardFooter className="p-6 pt-0">
-                  <div className="flex gap-2 w-full">
-                    <Button className="flex-1">
-                      <Link href={`/product/${product.slug}`} className="flex items-center gap-2">
-                        View Details
+                  
+                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2 leading-relaxed">
+                    {product.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    <Badge variant="secondary" className="text-xs">{product.type}</Badge>
+                    <Badge variant="outline" className="text-xs">{product.cooling}</Badge>
+                  </div>
+                  
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-2xl font-bold text-foreground">
+                        ${product.price.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-muted-foreground">Free shipping</div>
+                    </div>
+                    
+                    <div className="flex gap-2">
+                      <Link href={`/product/${product.slug}`}>
+                        <Button variant="ghost" size="sm" className="hover:bg-accent">
+                          View
+                        </Button>
                       </Link>
-                    </Button>
-                    <Button variant="outline" size="icon" onClick={() => handleAddToCart(product)}>
-                      <ShoppingCart className="w-4 h-4" />
-                    </Button>
+                      <Button size="sm" onClick={() => handleAddToCart(product)} className="btn-primary">
+                        <ShoppingCart className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
-                </CardFooter>
-              </Card>
+                </div>
+              </div>
             ))}
           </div>
         )}
         
-        <div className="text-center mt-12">
-          <Button size="lg" variant="outline">
-            <Link href="/shop">View All Products</Link>
-          </Button>
+        <div className="text-center mt-16">
+          <Link href="/shop">
+            <Button variant="ghost" className="btn-secondary text-lg px-8 py-3">
+              View All Products
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

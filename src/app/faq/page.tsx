@@ -136,7 +136,7 @@ export default function FAQPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-16">
         <div className="container mx-auto px-4">
@@ -152,7 +152,7 @@ export default function FAQPage() {
       </section>
 
       {/* Search and Filters */}
-      <section className="py-12 bg-white border-b">
+      <section className="py-12 bg-slate-800/50 backdrop-blur-sm border-b border-slate-700">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -180,8 +180,8 @@ export default function FAQPage() {
                 onClick={() => setSelectedCategory('')}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                   !selectedCategory 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white' 
+                    : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
                 }`}
               >
                 All Categories
@@ -192,8 +192,8 @@ export default function FAQPage() {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                     selectedCategory === category 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white' 
+                      : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
                   }`}
                 >
                   {category}
@@ -211,8 +211,8 @@ export default function FAQPage() {
             {filteredFaqs.length === 0 ? (
               <div className="text-center py-12">
                 <HelpCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-600 mb-2">No FAQs Found</h3>
-                <p className="text-gray-500">Try adjusting your search or filters</p>
+                <h3 className="text-xl font-semibold text-gray-300 mb-2">No FAQs Found</h3>
+                <p className="text-gray-400">Try adjusting your search or filters</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -241,7 +241,7 @@ export default function FAQPage() {
                     {expandedItems.has(faq.id) && (
                       <CardContent className="pt-0">
                         <div className="prose prose-gray max-w-none">
-                          <p className="text-gray-600 leading-relaxed">
+                          <p className="text-gray-300 leading-relaxed">
                             {faq.answer}
                           </p>
                         </div>
@@ -256,11 +256,11 @@ export default function FAQPage() {
       </section>
 
       {/* Contact Support */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-slate-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold mb-4">Still Have Questions?</h2>
-            <p className="text-xl text-gray-600 mb-8">
+            <h2 className="text-3xl font-bold mb-4 text-white">Still Have Questions?</h2>
+            <p className="text-xl text-gray-300 mb-8">
               Our support team is here to help you with any questions about crypto mining
             </p>
             
@@ -269,7 +269,7 @@ export default function FAQPage() {
                 <CardContent className="p-6">
                   <MessageCircle className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">Live Chat</h3>
-                  <p className="text-gray-600 mb-4">Chat with our experts in real-time</p>
+                  <p className="text-gray-300 mb-4">Chat with our experts in real-time</p>
                   <Button className="w-full">Start Chat</Button>
                 </CardContent>
               </Card>
@@ -278,7 +278,7 @@ export default function FAQPage() {
                 <CardContent className="p-6">
                   <Mail className="w-12 h-12 text-green-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">Email Support</h3>
-                  <p className="text-gray-600 mb-4">Get detailed help via email</p>
+                  <p className="text-gray-300 mb-4">Get detailed help via email</p>
                   <Button variant="outline" className="w-full">Send Email</Button>
                 </CardContent>
               </Card>
@@ -287,7 +287,7 @@ export default function FAQPage() {
                 <CardContent className="p-6">
                   <Phone className="w-12 h-12 text-purple-600 mx-auto mb-4" />
                   <h3 className="text-lg font-semibold mb-2">Phone Support</h3>
-                  <p className="text-gray-600 mb-4">Call us for immediate assistance</p>
+                  <p className="text-gray-300 mb-4">Call us for immediate assistance</p>
                   <Button variant="outline" className="w-full">Call Now</Button>
                 </CardContent>
               </Card>

@@ -92,36 +92,57 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container-nordcraft">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
-              <div className="h-8 w-8 rounded bg-blue-600 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">CM</span>
+            <Link href="/" className="flex items-center space-x-3 group">
+              <div className="h-10 w-10 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center transition-all duration-200 group-hover:scale-105 group-hover:shadow-lg">
+                <span className="text-primary-foreground font-bold text-lg">CM</span>
               </div>
-              <span className="font-bold text-xl">CM Crypto Miners</span>
+              <div className="flex flex-col">
+                <span className="font-bold text-xl gradient-text">CM Crypto Miners</span>
+                <span className="text-xs text-muted-foreground">Professional Mining Solutions</span>
+              </div>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
-            {navigation.map((item) => (
+          <nav className="hidden lg:flex items-center space-x-8">
+            {navigation.slice(0, 5).map((item) => (
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium transition-colors hover:text-blue-600"
+                className="nav-link text-sm"
                 onClick={(e) => {
-                  // Fallback navigation if Next.js Link doesn't work
                   if (e.ctrlKey || e.metaKey) {
-                    // Allow normal behavior for cmd/ctrl+click
                     return
                   }
-                  // Small delay to allow Next.js router to work first
                   setTimeout(() => {
                     if (window.location.pathname === item.href) {
-                      return // Already navigated
+                      return
+                    }
+                    handleNavigation(item.href)
+                  }, 100)
+                }}
+              >
+                {item.name}
+              </Link>
+            ))}
+            <div className="h-6 w-px bg-border"></div>
+            {navigation.slice(5).map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="nav-link text-sm"
+                onClick={(e) => {
+                  if (e.ctrlKey || e.metaKey) {
+                    return
+                  }
+                  setTimeout(() => {
+                    if (window.location.pathname === item.href) {
+                      return
                     }
                     handleNavigation(item.href)
                   }, 100)
@@ -135,7 +156,7 @@ export function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-sm font-medium transition-colors hover:text-blue-600 bg-blue-50 px-3 py-1 rounded-md"
+                className="nav-link-active text-sm bg-primary/10 px-3 py-1.5 rounded-md border border-primary/20"
                 onClick={(e) => {
                   if (e.ctrlKey || e.metaKey) {
                     return
@@ -154,27 +175,27 @@ export function Header() {
           </nav>
 
           {/* Search Bar */}
-          <div className="hidden lg:flex items-center space-x-2">
+          <div className="hidden xl:flex items-center space-x-3">
             <form onSubmit={(e) => handleSearch(e, searchQuery)} className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 type="search"
                 placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-64"
+                className="pl-10 w-80 bg-muted/50 border-border focus:border-primary transition-all duration-200"
               />
             </form>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-3">
             <Link href="/cart">
-              <Button variant="outline" size="sm" className="hidden sm:flex relative">
+              <Button variant="ghost" size="sm" className="hidden sm:flex relative hover:bg-accent">
                 <ShoppingCart className="h-4 w-4 mr-2" />
                 Cart
                 {mounted && itemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-primary text-primary-foreground">
                     {itemCount}
                   </Badge>
                 )}
@@ -182,22 +203,22 @@ export function Header() {
             </Link>
             
             {status === 'loading' ? (
-              <div className="w-16 h-8 bg-gray-200 rounded animate-pulse"></div>
+              <div className="w-20 h-8 bg-muted rounded animate-pulse"></div>
             ) : session ? (
               <div className="flex items-center space-x-2">
                 <Link href="/dashboard">
-                  <Button variant="outline" size="sm" className="hidden sm:flex">
+                  <Button variant="ghost" size="sm" className="hidden sm:flex hover:bg-accent">
                     <User className="h-4 w-4 mr-2" />
                     {session.user?.name || 'Dashboard'}
                   </Button>
                 </Link>
-                <Button variant="outline" size="sm" onClick={handleSignOut}>
+                <Button variant="ghost" size="sm" onClick={handleSignOut} className="hover:bg-accent">
                   Sign Out
                 </Button>
               </div>
             ) : (
               <Link href="/auth/signin">
-                <Button variant="outline" size="sm">
+                <Button className="btn-primary">
                   <User className="h-4 w-4 mr-2" />
                   Login
                 </Button>
@@ -206,23 +227,42 @@ export function Header() {
 
             {/* Mobile Menu */}
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
-              <SheetTrigger asChild className="md:hidden">
-                <Button variant="ghost" size="sm">
+              <SheetTrigger asChild className="lg:hidden">
+                <Button variant="ghost" size="sm" className="hover:bg-accent">
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                <div className="flex flex-col space-y-4 mt-8">
+              <SheetContent side="right" className="w-[350px] bg-background border-border">
+                <div className="flex flex-col space-y-6 mt-8">
                   {/* Mobile Navigation */}
-                  <nav className="flex flex-col space-y-3">
-                    {navigation.map((item) => (
+                  <nav className="flex flex-col space-y-2">
+                    <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Main Navigation</div>
+                    {navigation.slice(0, 5).map((item) => (
                       <Link
                         key={item.name}
                         href={item.href}
-                        className="text-sm font-medium transition-colors hover:text-blue-600 py-2"
+                        className="nav-link py-3 px-4 rounded-lg hover:bg-accent transition-colors duration-200"
                         onClick={() => {
                           setIsOpen(false)
-                          // Fallback navigation
+                          setTimeout(() => {
+                            if (window.location.pathname === item.href) {
+                              return
+                            }
+                            handleNavigation(item.href)
+                          }, 100)
+                        }}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                    <div className="h-px bg-border my-2"></div>
+                    {navigation.slice(5).map((item) => (
+                      <Link
+                        key={item.name}
+                        href={item.href}
+                        className="nav-link py-3 px-4 rounded-lg hover:bg-accent transition-colors duration-200"
+                        onClick={() => {
+                          setIsOpen(false)
                           setTimeout(() => {
                             if (window.location.pathname === item.href) {
                               return
@@ -239,7 +279,7 @@ export function Header() {
                       <Link
                         key={item.name}
                         href={item.href}
-                        className="text-sm font-medium transition-colors hover:text-blue-600 py-2 bg-blue-50 px-3 py-2 rounded-md"
+                        className="nav-link-active py-3 px-4 rounded-lg bg-primary/10 border border-primary/20"
                         onClick={() => {
                           setIsOpen(false)
                           setTimeout(() => {
@@ -256,25 +296,29 @@ export function Header() {
                   </nav>
 
                   {/* Mobile Search */}
-                  <form onSubmit={(e) => handleSearch(e, mobileSearchQuery)} className="relative">
-                    <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-                    <Input
-                      type="search"
-                      placeholder="Search products..."
-                      value={mobileSearchQuery}
-                      onChange={(e) => setMobileSearchQuery(e.target.value)}
-                      className="pl-10"
-                    />
-                  </form>
+                  <div className="space-y-3">
+                    <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Search</div>
+                    <form onSubmit={(e) => handleSearch(e, mobileSearchQuery)} className="relative">
+                      <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <Input
+                        type="search"
+                        placeholder="Search products..."
+                        value={mobileSearchQuery}
+                        onChange={(e) => setMobileSearchQuery(e.target.value)}
+                        className="pl-10 bg-muted/50 border-border focus:border-primary"
+                      />
+                    </form>
+                  </div>
 
                   {/* Mobile Action Buttons */}
-                  <div className="flex flex-col space-y-2 pt-4 border-t">
+                  <div className="flex flex-col space-y-3 pt-4 border-t border-border">
+                    <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Account</div>
                     <Link href="/cart" onClick={() => setIsOpen(false)}>
-                      <Button variant="outline" className="w-full relative">
-                        <ShoppingCart className="h-4 w-4 mr-2" />
+                      <Button variant="ghost" className="w-full justify-start relative hover:bg-accent">
+                        <ShoppingCart className="h-4 w-4 mr-3" />
                         Cart
                         {mounted && itemCount > 0 && (
-                          <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs">
+                          <Badge className="absolute right-3 h-5 w-5 rounded-full p-0 flex items-center justify-center text-xs bg-primary text-primary-foreground">
                             {itemCount}
                           </Badge>
                         )}
@@ -282,23 +326,23 @@ export function Header() {
                     </Link>
                     
                     {status === 'loading' ? (
-                      <div className="w-full h-8 bg-gray-200 rounded animate-pulse"></div>
+                      <div className="w-full h-10 bg-muted rounded animate-pulse"></div>
                     ) : session ? (
                       <>
                         <Link href="/dashboard" onClick={() => setIsOpen(false)}>
-                          <Button variant="outline" className="w-full">
-                            <User className="h-4 w-4 mr-2" />
+                          <Button variant="ghost" className="w-full justify-start hover:bg-accent">
+                            <User className="h-4 w-4 mr-3" />
                             {session.user?.name || 'Dashboard'}
                           </Button>
                         </Link>
-                        <Button variant="outline" className="w-full" onClick={handleSignOut}>
+                        <Button variant="ghost" className="w-full justify-start hover:bg-accent" onClick={handleSignOut}>
                           Sign Out
                         </Button>
                       </>
                     ) : (
                       <Link href="/auth/signin" onClick={() => setIsOpen(false)}>
-                        <Button variant="outline" className="w-full">
-                          <User className="h-4 w-4 mr-2" />
+                        <Button className="w-full btn-primary">
+                          <User className="h-4 w-4 mr-3" />
                           Login
                         </Button>
                       </Link>

@@ -89,7 +89,7 @@ export default function ContactPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-blue-600 to-purple-700 text-white py-16">
         <div className="container mx-auto px-4">
@@ -114,7 +114,7 @@ export default function ContactPage() {
               <Card className="shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-2xl">Send us a Message</CardTitle>
-                  <p className="text-gray-600">
+                  <p className="text-gray-300">
                     Fill out the form below and we'll get back to you within 24 hours
                   </p>
                 </CardHeader>
@@ -122,7 +122,7 @@ export default function ContactPage() {
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-sm font-medium mb-2">Name *</label>
+                        <label className="block text-sm font-medium mb-2 text-gray-200">Name *</label>
                         <Input
                           name="name"
                           value={formData.name}
@@ -132,7 +132,7 @@ export default function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-medium mb-2">Email *</label>
+                        <label className="block text-sm font-medium mb-2 text-gray-200">Email *</label>
                         <Input
                           name="email"
                           type="email"
@@ -145,7 +145,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Phone</label>
+                      <label className="block text-sm font-medium mb-2 text-gray-200">Phone</label>
                       <Input
                         name="phone"
                         type="tel"
@@ -156,7 +156,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Subject *</label>
+                      <label className="block text-sm font-medium mb-2 text-gray-200">Subject *</label>
                       <Input
                         name="subject"
                         value={formData.subject}
@@ -167,7 +167,7 @@ export default function ContactPage() {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Message *</label>
+                      <label className="block text-sm font-medium mb-2 text-gray-200">Message *</label>
                       <Textarea
                         name="message"
                         value={formData.message}
@@ -221,9 +221,9 @@ export default function ContactPage() {
                           <info.icon className={`w-5 h-5 ${info.color}`} />
                         </div>
                         <div>
-                          <h3 className="font-semibold mb-2">{info.title}</h3>
+                          <h3 className="font-semibold mb-2 text-white">{info.title}</h3>
                           {info.details.map((detail, i) => (
-                            <p key={i} className="text-sm text-gray-600">{detail}</p>
+                            <p key={i} className="text-sm text-gray-300">{detail}</p>
                           ))}
                         </div>
                       </div>
@@ -244,13 +244,13 @@ export default function ContactPage() {
                   {departments.map((dept, index) => (
                     <div key={index} className="border-l-4 border-blue-600 pl-4">
                       <h4 className="font-semibold text-lg">{dept.name}</h4>
-                      <p className="text-sm text-gray-600 mb-2">{dept.description}</p>
+                      <p className="text-sm text-gray-300 mb-2">{dept.description}</p>
                       <div className="space-y-1">
-                        <p className="text-sm">
-                          <span className="font-medium">Email:</span> {dept.email}
+                        <p className="text-sm text-gray-300">
+                          <span className="font-medium text-gray-200">Email:</span> {dept.email}
                         </p>
-                        <p className="text-sm">
-                          <span className="font-medium">Phone:</span> {dept.phone}
+                        <p className="text-sm text-gray-300">
+                          <span className="font-medium text-gray-200">Phone:</span> {dept.phone}
                         </p>
                       </div>
                     </div>
@@ -263,7 +263,7 @@ export default function ContactPage() {
                 <CardContent className="p-6 text-center">
                   <MessageCircle className="w-12 h-12 text-blue-600 mx-auto mb-4" />
                   <h3 className="text-xl font-semibold mb-2">Prefer Live Chat?</h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-300 mb-4">
                     Get instant answers from our support team
                   </p>
                   <Button className="w-full">
@@ -277,40 +277,40 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-slate-800/50 backdrop-blur-sm">
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold text-center mb-12">Visit Our Office</h2>
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">Visit Our Office</h2>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div>
                 <Card className="h-full">
                   <CardContent className="p-8">
-                    <h3 className="text-xl font-semibold mb-6">Our Location</h3>
+                    <h3 className="text-xl font-semibold mb-6 text-white">Our Location</h3>
                     <div className="space-y-4">
                       <div className="flex items-start gap-3">
                         <MapPin className="w-5 h-5 text-blue-600 mt-1" />
                         <div>
-                          <p className="font-medium">Headquarters</p>
-                          <p className="text-gray-600">123 Mining Street</p>
-                          <p className="text-gray-600">Crypto Valley, CA 90210</p>
-                          <p className="text-gray-600">United States</p>
+                          <p className="font-medium text-white">Headquarters</p>
+                          <p className="text-gray-300">123 Mining Street</p>
+                          <p className="text-gray-300">Crypto Valley, CA 90210</p>
+                          <p className="text-gray-300">United States</p>
                         </div>
                       </div>
                       
                       <div className="flex items-start gap-3">
                         <Clock className="w-5 h-5 text-green-600 mt-1" />
                         <div>
-                          <p className="font-medium">Office Hours</p>
-                          <p className="text-gray-600">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                          <p className="text-gray-600">Saturday: 10:00 AM - 4:00 PM</p>
-                          <p className="text-gray-600">Sunday: Closed</p>
+                          <p className="font-medium text-white">Office Hours</p>
+                          <p className="text-gray-300">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                          <p className="text-gray-300">Saturday: 10:00 AM - 4:00 PM</p>
+                          <p className="text-gray-300">Sunday: Closed</p>
                         </div>
                       </div>
                     </div>
                     
                     <div className="mt-8">
-                      <h4 className="font-semibold mb-4">Getting Here</h4>
-                      <div className="space-y-2 text-sm text-gray-600">
+                      <h4 className="font-semibold mb-4 text-white">Getting Here</h4>
+                      <div className="space-y-2 text-sm text-gray-300">
                         <p>• Free parking available on-site</p>
                         <p>• Accessible by public transit</p>
                         <p>• Airport: 45 minutes from LAX</p>
@@ -324,10 +324,10 @@ export default function ContactPage() {
               <div>
                 <Card className="h-full">
                   <CardContent className="p-0 h-full min-h-[400px] bg-gray-100 flex items-center justify-center">
-                    <div className="text-center text-gray-500">
+                    <div className="text-center text-gray-400">
                       <MapPin className="w-16 h-16 mx-auto mb-4" />
-                      <p className="text-lg font-medium">Interactive Map</p>
-                      <p className="text-sm">Map integration would go here</p>
+                      <p className="text-lg font-medium text-white">Interactive Map</p>
+                      <p className="text-sm text-gray-400">Map integration would go here</p>
                     </div>
                   </CardContent>
                 </Card>
