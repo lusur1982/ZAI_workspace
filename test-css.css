@@ -1,0 +1,13 @@
+/* Test CSS file to verify styling is working */
+.test-css {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+}
+
+body {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
