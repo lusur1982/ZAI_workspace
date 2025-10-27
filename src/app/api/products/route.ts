@@ -33,14 +33,29 @@ export async function GET(request: NextRequest) {
       ]
     }
 
+    // Optimized query with select and proper limits
     const products = await db.product.findMany({
       where: whereClause,
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        description: true,
+        price: true,
+        type: true,
+        cooling: true,
+        images: true,
+        featured: true,
+        new: true,
+        createdAt: true,
+        updatedAt: true,
+      },
       orderBy: [
         { featured: 'desc' },
         { new: 'desc' },
         { createdAt: 'desc' }
       ],
-      take: limit ? parseInt(limit) : undefined
+      take: limit ? Math.min(parseInt(limit), 50) : 20 // Limit max results
     })
 
     // Parse images JSON for each product
@@ -49,11 +64,14 @@ export async function GET(request: NextRequest) {
       images: JSON.parse(product.images || '[]')
     }))
 
-    return NextResponse.json({ products: productsWithParsedImages })
+    return NextResponse.json({ 
+      products: productsWithParsedImages,
+      total: productsWithParsedImages.length
+    })
   } catch (error) {
     console.error('Error fetching products:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch products' },
+      { error: 'Failed to fetch products', products: [] },
       { status: 500 }
     )
   }
@@ -84,7 +102,8 @@ export async function POST(request: NextRequest) {
 
     // Check if slug already exists
     const existingProduct = await db.product.findUnique({
-      where: { slug }
+      where: { slug },
+      select: { id: true }
     })
 
     if (existingProduct) {
@@ -105,6 +124,20 @@ export async function POST(request: NextRequest) {
         images: JSON.stringify(images || []),
         featured,
         new: isNew
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        description: true,
+        price: true,
+        type: true,
+        cooling: true,
+        images: true,
+        featured: true,
+        new: true,
+        createdAt: true,
+        updatedAt: true,
       }
     })
 

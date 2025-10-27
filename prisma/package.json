@@ -1,0 +1,18 @@
+{
+  "name": "seed",
+  "version": "1.0.0",
+  "description": "Database seeding script",
+  "scripts": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.0.0",
+    "prisma": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "crypto": "^1.0.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "@types/node": "^20.0.0"
+  }
+}
