@@ -22,7 +22,6 @@ const nextConfig = {
   
   // Enable experimental features
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
     scrollRestoration: true,
   },
@@ -131,9 +130,6 @@ const nextConfig = {
     
     return config
   },
-  
-  // Output configuration
-  output: 'standalone',
   
   // Power by header
   poweredByHeader: false,
